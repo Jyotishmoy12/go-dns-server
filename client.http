@@ -1,0 +1,15 @@
+PS C:\Users\ASUS\go-dns-server> go run test_client.go
+Sending query for amazon.com. to server...
+
+--- DNS SERVER RESULTS ---
+[1] IP Address: 98.87.170.74 (TTL: 465)
+[2] IP Address: 98.87.170.71 (TTL: 465)
+[3] IP Address: 98.82.161.185 (TTL: 465)
+PS C:\Users\ASUS\go-dns-server> go run test_client.go
+Sending query for amazon.com. to server...
+
+--- DNS SERVER RESULTS ---
+[1] IP Address: 98.87.170.74 (TTL: 465)
+[2] IP Address: 98.87.170.71 (TTL: 465)
+[3] IP Address: 98.82.161.185 (TTL: 465)
+PS C:\Users\ASUS\go-dns-server> 
