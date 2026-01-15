@@ -145,7 +145,6 @@ internal/
       ├── handler.go    # Query flow: Cache → Local → Resolve
       ├── resolver.go   # Iterative recursive engine
       ├── cache.go      # TTL‑aware concurrent cache
-      └── records.go    # Local authoritative records
 
 config.json             # Local DNS overrides
 test_client.go          # DNS query tester
