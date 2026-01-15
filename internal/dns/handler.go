@@ -23,8 +23,6 @@ func LoadRecords(filename string) {
 		log.Printf("Could not read config file: %v", err)
 		return
 	}
-
-	// We update the existing records map
 	newRecords := make(map[string]string)
 	err = json.Unmarshal(file, &newRecords)
 	if err != nil {
@@ -55,7 +53,7 @@ func HandlePacket(pc net.PacketConn, addr net.Addr, buf []byte) {
 	log.Printf("2. Query received for domain: %s", name)
 
 	if cachedMsg, found := GetCache(name); found && cachedMsg != nil {
-		cachedMsg.Header.ID = m.Header.ID // Sync the ID
+		cachedMsg.Header.ID = m.Header.ID
 		packed, err := cachedMsg.Pack()
 		if err == nil {
 			pc.WriteTo(packed, addr)
@@ -66,27 +64,19 @@ func HandlePacket(pc net.PacketConn, addr net.Addr, buf []byte) {
 	recordsMu.RLock()
 	ip, ok := records[name]
 	recordsMu.RUnlock()
-
-	// Check if we have a local record
 	if ok && question.Type == dnsmessage.TypeA {
 		log.Printf("3a. Local record found for %s -> %s", name, ip)
 		sendLocalResponse(pc, addr, m, ip)
 		return
 	}
-
-	// If not local, use the Resolver (Step 2)
-	log.Printf("3b. Not local. Forwarding %s to Google (8.8.8.8)...", name)
+	log.Printf("3b. Not local. Starting recursive resolution for %s...", name)
 	resolved, err := Resolve(question)
 	if err != nil && resolved == nil {
 		log.Printf("Resolution error: %v", err)
 		return
 	}
-
-	// Cache the resolved response
 	SetCache(name, *resolved)
-
-	// Sync the ID from the original query to the resolved response
-	log.Printf("4. Google replied. Sending answer back to %s", addr)
+	log.Printf("4. Authoritative answer received. Sending back to %s", addr)
 	for _, answer := range resolved.Answers {
 		if rec, ok := answer.Body.(*dnsmessage.AResource); ok {
 			log.Printf(">> FOUND IP: %d.%d.%d.%d", rec.A[0], rec.A[1], rec.A[2], rec.A[3])
@@ -101,7 +91,6 @@ func HandlePacket(pc net.PacketConn, addr net.Addr, buf []byte) {
 }
 
 func sendLocalResponse(pc net.PacketConn, addr net.Addr, request dnsmessage.Message, ip string) {
-	// Parse string IP to [4]byte
 	parsedIP := net.ParseIP(ip).To4()
 	var ipBytes [4]byte
 	copy(ipBytes[:], parsedIP)

@@ -18,11 +18,6 @@ func main() {
 	defer pc.Close()
 	dns.LoadRecords("config.json")
 	log.Printf("DNS Server is running on %s..", addr)
-
-	// 2. High-Concurrency Loop
-	// We run the reading logic in a loop. For every packet, we spawn a goroutine.
-	// In a massive scale production app, you'd use a Worker Pool here.
-
 	go func() {
 		for {
 			buf := make([]byte, 512)

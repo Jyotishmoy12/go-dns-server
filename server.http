@@ -1,19 +1,18 @@
-PS C:\Users\ASUS\go-dns-server> go run ./cmd/server/main.go
-2026/01/12 22:44:24 Loaded 3 local records from config.json
-2026/01/12 22:44:24 DNS Server is running on :8083..
-DEBUG: Received packet from 127.0.0.1:61700
-2026/01/12 22:44:31 2. Query received for domain: amazon.com.
-2026/01/12 22:44:31 3b. Not local. Forwarding amazon.com. to Google (8.8.8.8)...
-2026/01/12 22:44:31 RESOLVER: Dialing Google...
-2026/01/12 22:44:31 RESOLVER: Writing packet to Google...
-2026/01/12 22:44:31 RESOLVER: Waiting for Google's reply...
-2026/01/12 22:44:31 RESOLVER: Google replied with 76 bytes!
-2026/01/12 22:44:31 Caching amazon.com. for 465 seconds
-2026/01/12 22:44:31 4. Google replied. Sending answer back to 127.0.0.1:61700
-2026/01/12 22:44:31 >> FOUND IP: 98.87.170.74
-2026/01/12 22:44:31 >> FOUND IP: 98.87.170.71
-2026/01/12 22:44:31 >> FOUND IP: 98.82.161.185
-2026/01/12 22:44:31 CACHE MISS (Resolved): amazon.com. [Time: 86.5366ms]
-DEBUG: Received packet from 127.0.0.1:62796
-2026/01/12 22:44:46 2. Query received for domain: amazon.com.
-2026/01/12 22:44:46 CACHE HIT: amazon.com. [Time: 522.4µs]
+2026/01/15 18:08:02 Loaded 3 local records from config.json
+2026/01/15 18:08:02 DNS Server is running on :8083..
+DEBUG: Received packet from 127.0.0.1:63746
+2026/01/15 18:08:08 2. Query received for domain: amazon.com.
+2026/01/15 18:08:08 3b. Not local. Starting recursive resolution for amazon.com....
+2026/01/15 18:08:08 NAVIGATOR: [Hop 0] Asking 198.41.0.4 for amazon.com.
+2026/01/15 18:08:09 NAVIGATOR: [Hop 1] Asking 192.41.162.30 for amazon.com.
+2026/01/15 18:08:09 NAVIGATOR: [Hop 2] Asking 156.154.64.10 for amazon.com.
+2026/01/15 18:08:09 NAVIGATOR: Success! Found IP for amazon.com.
+2026/01/15 18:08:09 Caching amazon.com. for 900 seconds
+2026/01/15 18:08:09 4. Authoritative answer received. Sending back to 127.0.0.1:63746
+2026/01/15 18:08:09 >> FOUND IP: 98.82.161.185
+2026/01/15 18:08:09 >> FOUND IP: 98.87.170.74
+2026/01/15 18:08:09 >> FOUND IP: 98.87.170.71
+2026/01/15 18:08:09 CACHE MISS (Resolved): amazon.com. [Time: 590.8555ms]
+DEBUG: Received packet from 127.0.0.1:64105
+2026/01/15 18:08:34 2. Query received for domain: amazon.com.
+2026/01/15 18:08:34 CACHE HIT: amazon.com. [Time: 530.3µs]
