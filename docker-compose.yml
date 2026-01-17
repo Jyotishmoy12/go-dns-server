@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  dns-server:
+    build: .
+    container_name: go-dns-app
+    ports:
+      - "8083:8083/udp" # Maps your host port to container port
+    volumes:
+      - ./config.json:/root/config.json # Syncs your local config with the container
+    restart: always # Automatically restarts if the server crashes or PC reboots
+    networks:
+      - dns-network
+
+networks:
+  dns-network:
+    driver: bridge
